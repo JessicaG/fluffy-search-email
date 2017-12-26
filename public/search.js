@@ -31,13 +31,26 @@ search.addWidget(
             return `
               <div class="col-md-4" style="text-align: center;">
                 <p> 
-                  <h3 class="hit-text">${hit._highlightResult.strDrink.value}</h3>
-                  <img src="${hit.strDrinkThumb}" height="50" width="50">
+                  <h2 class="hit-text">${hit._highlightResult.strDrink.value}</h2>
+                  <img src="${hit.strDrinkThumb}" class="drink-images">
                 </p>
                 <p>
-                  Category: 🤹‍ ${hit.strCategory}
+                <p>
+                  <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}">
+                    Email me 💌
+                  </button>
+                  <div class="collapse" id="#collapseDrink${hit.idDrink}">
+                    <div class="card card-body">
+                    <form class="email-cocktail-form">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Enter your email address">
+                          <span class="input-group-addon"><a href="/email/${hit.objectID}">Email me: 💌‍ </a></span>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </p>
-
               </div>
             `;
           } catch (e) {

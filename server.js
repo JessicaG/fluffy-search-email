@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 const upload = multer()
 const cocktailApi = require('./server/helpers/cocktail_api')
-//const algoliaHelper = require('./server/helpers/algolia');
+const algoliaHelper = require('./server/helpers/algolia');
 
 const dataUrl = "https://raw.githubusercontent.com/algolia/datasets/master/movies/actors.json"
 
