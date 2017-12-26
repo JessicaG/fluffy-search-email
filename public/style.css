@@ -1,0 +1,93 @@
+/* styles */
+/* called by your view template */
+
+/* You have access to these styles in addition to bootstap, which is accessed via CDN in your index.html file */
+/* Check out how to use different components below: */
+/* https://getbootstrap.com/docs/4.0/getting-started/introduction/ */
+
+.nicejob {
+  text-decoration: line-through;
+}
+
+img {
+  margin: 0 auto;
+  display: block;
+}
+
+li {
+  list-style: none;
+  font-size: 35px;
+  color: grey;
+}
+body {
+  /*font-family: 'Pangolin', cursive;*/
+}
+
+#remix {
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+}
+
+#welcome {
+  font-family: 'Press Start 2P', cursive;
+}
+
+.detailed-steps {
+  font-size: 20px;
+  font-style: italic;
+}
+
+.current-step {
+  color: black;
+}
+
+.completed-steps {
+  text-decoration: line-through;
+}
+
+/* copied from the instantsearch theme located at
+   https://cdn.jsdelivr.net/npm/instantsearch.js@2.2.0/dist/instantsearch-theme-algolia.css */
+.ais-pagination {
+  background: #FFFFFF;
+  -webkit-box-shadow: 0 1px 1px 0 rgba(85, 95, 110, 0.2);
+          box-shadow: 0 1px 1px 0 rgba(85, 95, 110, 0.2);
+  border: solid 1px #D4D8E3;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  padding: 8px 16px;
+  width: 0 auto; 
+}
+
+.ais-pagination--item {
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+  width: 28px; 
+}
+.ais-pagination--item:hover {
+  background: rgba(39, 81, 175, 0.1); 
+}
+.ais-pagination--item__disabled {
+  color: #BBB;
+  opacity: .5;
+  pointer-events: none;
+  visibility: visible; 
+}
+.ais-pagination--item__active {
+  background: #3369E7; 
+}
+.ais-pagination--item__active .ais-pagination--link {
+  color: #FFFFFF; 
+}
+.ais-pagination--link {
+  color: #697782;
+  display: block;
+  text-decoration: none;
+  height: 100%;
+  width: 100%; 
+}
+.ais-pagination--link:hover {
+  color: #3369E7;
+  text-decoration: none; 
+}

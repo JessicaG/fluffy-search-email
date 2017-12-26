@@ -1,0 +1,13 @@
+<script>
+  // make key server-side information available on the client
+  window.glitchApp = {
+    algolia: {
+      index_name: "{{ algolia.index_name }}",
+      app_id: "{{ algolia.app_id }}",
+      search_api_key: "{{ algolia.search_api_key }}"
+    },
+    data: {
+      algolia_env: "{{ data.algolia_env }}",
+    }
+  };
+</script>
