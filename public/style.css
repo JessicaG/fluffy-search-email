@@ -9,9 +9,17 @@
   text-decoration: line-through;
 }
 
-img {
+.drink-images {
   margin: 0 auto;
   display: block;
+  box-shadow: 8px 8px 10px #aaa;
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+}
+
+footer {
+  text-align: center;
 }
 
 li {
