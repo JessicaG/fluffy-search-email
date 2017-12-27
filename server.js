@@ -21,9 +21,10 @@ app.get('/', (request, response) => {
   response.send(nunjucks.render('index.html', getTemplateContext(request)));
 });
 
-app.post('/email?:id', function(req, res){
-  alert("HERE")
+app.post('/email', function(req, res){
   console.log(response.params)
+  console.log(response)
+  console.log(request)
   response.send(200)
 });
 

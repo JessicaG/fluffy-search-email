@@ -40,13 +40,16 @@ search.addWidget(
                     Email me 💌
                   </button>
                   <div class="collapse" id="collapseDrink${hit.idDrink}">
+                    
                     <form class="form-inline">
                       <div class="form-group mx-sm-3">
+                        <input type="hidden" class="object-id" value="${hit.idDrink}"/>
                         <label for="email-address" class="sr-only">Email</label>
-                        <input type="email" class="form-control" id="email-address" placeholder="Email">
+                        <input type="email" class="form-control" id="email-address${hit.idDrink}" placeholder="Email">
                       </div>
-                      <button type="submit" class="btn btn-light" id="email-drink-recipe">📩🔜🍸</button>
+                      <input type="submit" value="Go">
                     </form>
+                  
                   </div>
                 </p>
               </div>
