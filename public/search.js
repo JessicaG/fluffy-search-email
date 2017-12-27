@@ -39,16 +39,14 @@ search.addWidget(
                   <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}">
                     Email me 💌
                   </button>
-                  <div class="collapse" id="#collapseDrink${hit.idDrink}">
-                    <div class="card card-body">
-                    <form class="email-cocktail-form">
-                      <div class="form-group">
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Enter your email address">
-                          <span class="input-group-addon"><a href="/email/${hit.objectID}">Email me: 💌‍ </a></span>
-                        </div>
-                      </form>
-                    </div>
+                  <div class="collapse" id="collapseDrink${hit.idDrink}">
+                    <form class="form-inline">
+                      <div class="form-group mx-sm-3">
+                        <label for="email-address" class="sr-only">Email</label>
+                        <input type="email" class="form-control" id="email-address" placeholder="Email">
+                      </div>
+                      <button type="submit" class="btn btn-light" id="email-drink-recipe">📩🔜🍸</button>
+                    </form>
                   </div>
                 </p>
               </div>
