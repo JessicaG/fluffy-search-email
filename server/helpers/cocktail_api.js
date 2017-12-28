@@ -2,6 +2,10 @@ const axios = require('axios')
 const sgMail = require('@sendgrid/mail');
 
 function fetchRecipe(body) {
+
+  // index.getObject('myObjectID', function(err, content) {
+  //    console.log(content.objectID + ": " + content.toString());
+  // })
   const url = `http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${body.subject}`
   return axios.get(url,{})
   .then(function(response){

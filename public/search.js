@@ -12,13 +12,13 @@ $(document).ready(function() {
     }
   });
 
-// //conects the search input on your page to Algolia
-search.addWidget(
-  instantsearch.widgets.searchBox({
-    container: '#search-box',
-    placeholder: 'Search for your favorite drink recipe'
-  })
-);
+  // //conects the search input on your page to Algolia
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '#search-box',
+      placeholder: 'Search for your favorite drink recipe'
+    })
+  );
   // adds the results of your data, in your return statement you can change what you want shown
   search.addWidget(
     instantsearch.widgets.hits({
@@ -39,16 +39,17 @@ search.addWidget(
                   <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}">
                     Email me 💌
                   </button>
-                  <div class="collapse" id="#collapseDrink${hit.idDrink}">
-                    <div class="card card-body">
-                    <form class="email-cocktail-form">
-                      <div class="form-group">
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Enter your email address">
-                          <span class="input-group-addon"><a href="/email/${hit.objectID}">Email me: 💌‍ </a></span>
-                        </div>
-                      </form>
-                    </div>
+                  <div class="collapse" id="collapseDrink${hit.idDrink}">
+                    
+                    <form class="form-inline">
+                      <div class="form-group mx-sm-3">
+                        <input type="hidden" class="object-id" value="${hit.idDrink}"/>
+                        <label for="email-address" class="sr-only">Email</label>
+                        <input type="email" class="form-control" id="email-address${hit.idDrink}" placeholder="Email">
+                      </div>
+                      <input type="submit" value="Go">
+                    </form>
+                  
                   </div>
                 </p>
               </div>
@@ -70,4 +71,28 @@ search.addWidget(
   );
 
   search.start();
+
+  search.on('render', function() {
+   $("form").each(function(index, element) {
+      var objectId = $(element).find('.object-id').first().val();
+      
+      $(element).submit(function(event){
+        var emailAddress = $('#email-address' + objectId).val();
+        event.preventDefault(); 
+        postEmail(objectId, emailAddress);
+      });
+    });
+  });
 });
+
+  var postEmail = function( objectId, emailAddress) {
+    data = { objectId: objectId, emailAddress: emailAddress};    
+
+    $.post({
+      url: '/email',
+      contentType: 'application/json',
+      success: function(data) {
+        console.log(data)
+      }
+    });
+  };
