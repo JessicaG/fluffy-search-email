@@ -21,11 +21,9 @@ app.get('/', (request, response) => {
   response.send(nunjucks.render('index.html', getTemplateContext(request)));
 });
 
-app.post('/email', function(req, res){
-  console.log(response.params)
-  console.log(response)
-  console.log(request)
-  response.send(200)
+app.post('/email', function(request, response){
+  // receiving json data okay?
+  response.sendStatus(200)
 });
 
 app.post('/parse', upload.fields([]), function (req, res) {

@@ -12,13 +12,13 @@ $(document).ready(function() {
     }
   });
 
-// //conects the search input on your page to Algolia
-search.addWidget(
-  instantsearch.widgets.searchBox({
-    container: '#search-box',
-    placeholder: 'Search for your favorite drink recipe'
-  })
-);
+  // //conects the search input on your page to Algolia
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '#search-box',
+      placeholder: 'Search for your favorite drink recipe'
+    })
+  );
   // adds the results of your data, in your return statement you can change what you want shown
   search.addWidget(
     instantsearch.widgets.hits({
@@ -71,4 +71,28 @@ search.addWidget(
   );
 
   search.start();
+
+  search.on('render', function() {
+   $("form").each(function(index, element) {
+      var objectId = $(element).find('.object-id').first().val();
+      
+      $(element).submit(function(event){
+        var emailAddress = $('#email-address' + objectId).val();
+        event.preventDefault(); 
+        postEmail(objectId, emailAddress);
+      });
+    });
+  });
 });
+
+  var postEmail = function( objectId, emailAddress) {
+    data = { objectId: objectId, emailAddress: emailAddress};    
+
+    $.post({
+      url: '/email',
+      contentType: 'application/json',
+      success: function(data) {
+        console.log(data)
+      }
+    });
+  };
