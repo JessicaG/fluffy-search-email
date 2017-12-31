@@ -36,20 +36,21 @@ $(document).ready(function() {
                 </p>
                 <p>
                 <p>
-                  <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}">
-                    Email me 💌
+                  <button class="btn btn-light drink-details" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}">
+                    😋 Drink Details
                   </button>
                   <div class="collapse" id="collapseDrink${hit.idDrink}">
-                    
-                    <form class="form-inline">
-                      <div class="form-group mx-sm-3">
-                        <input type="hidden" class="object-id" value="${hit.idDrink}"/>
-                        <label for="email-address" class="sr-only">Email</label>
-                        <input type="email" class="form-control" id="email-address${hit.idDrink}" placeholder="Email">
-                      </div>
-                      <input type="submit" value="Go">
-                    </form>
-                  
+                    <h2>👓 ${hit.strGlass}</h2>
+                    <li>📝 ${hit.strInstructions}</li>
+                  <ul>
+                  <h2>Ingredients</h2>
+                    <li>${hit.strMeasure1} ${hit.strIngredient1}</li>
+                    <li>${hit.strMeasure2} ${hit.strIngredient2}</li>
+                    <li>${hit.strMeasure3} ${hit.strIngredient3}</li>
+                    <li>${hit.strMeasure4} ${hit.strIngredient4}</li>
+                    <li>${hit.strMeasure5} ${hit.strIngredient5}</li>
+                    <li>${hit.strMeasure6} ${hit.strIngredient6}</li>
+                  </ul>
                   </div>
                 </p>
               </div>
@@ -83,6 +84,11 @@ $(document).ready(function() {
       });
     });
   });
+
+   $("fa.fa-glass").click(function() {
+    $(this).toggleClass("drink");
+  });
+
 });
 
   var postEmail = function( objectId, emailAddress) {
@@ -96,3 +102,5 @@ $(document).ready(function() {
       }
     });
   };
+
+ 
