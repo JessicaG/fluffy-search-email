@@ -18,13 +18,26 @@
   height: 300px;
 }
 
+.drink-details {
+  font-size: 18px !important;
+}
+
+.drink {
+  font-size: 25px;
+  color:gold;
+}
+
+p {
+  font-size: 15px !important;
+}
+
 footer {
   text-align: center;
 }
 
 li {
   list-style: none;
-  font-size: 35px;
+  font-size: 18px;
   color: grey;
 }
 body {

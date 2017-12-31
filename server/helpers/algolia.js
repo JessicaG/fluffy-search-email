@@ -12,7 +12,7 @@ var algoliaIndex = algoliaClient.initIndex("movie-actors");
   // use axios for api calls
 const axios = require('axios');
 
-function indexTweets(data_url){
+function indexData(data_url){
   return axios.get(data_url,{})
   .then(function(response){
       return dataToAlgoliaObject(response.data)
@@ -65,9 +65,15 @@ function configureAlgoliaIndex(){
   });
 }
 
+// function configureAlgoliaFaceting(){
+//   algoliaIndex.search({
+    
+//   })
+}
+
 function sendDataToAlgolia(algoliaObjects){
   algoliaIndex.addObjects(algoliaObjects, function(err, content) {
   })
 }
 
-module.exports = {indexTweets}
+module.exports = {indexData}

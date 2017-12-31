@@ -12,13 +12,13 @@ $(document).ready(function() {
     }
   });
 
-// //conects the search input on your page to Algolia
-search.addWidget(
-  instantsearch.widgets.searchBox({
-    container: '#search-box',
-    placeholder: 'Search for your favorite drink recipe'
-  })
-);
+  // //conects the search input on your page to Algolia
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '#search-box',
+      placeholder: 'Search for your favorite drink recipe'
+    })
+  );
   // adds the results of your data, in your return statement you can change what you want shown
   search.addWidget(
     instantsearch.widgets.hits({
@@ -36,19 +36,21 @@ search.addWidget(
                 </p>
                 <p>
                 <p>
-                  <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}">
-                    Email me 💌
+                  <button class="btn btn-light drink-details" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}">
+                    😋 Drink Details
                   </button>
-                  <div class="collapse" id="#collapseDrink${hit.idDrink}">
-                    <div class="card card-body">
-                    <form class="email-cocktail-form">
-                      <div class="form-group">
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Enter your email address">
-                          <span class="input-group-addon"><a href="/email/${hit.objectID}">Email me: 💌‍ </a></span>
-                        </div>
-                      </form>
-                    </div>
+                  <div class="collapse" id="collapseDrink${hit.idDrink}">
+                    <h2>👓 ${hit.strGlass}</h2>
+                    <li>📝 ${hit.strInstructions}</li>
+                  <ul>
+                  <h2>Ingredients</h2>
+                    <li>${hit.strMeasure1} ${hit.strIngredient1}</li>
+                    <li>${hit.strMeasure2} ${hit.strIngredient2}</li>
+                    <li>${hit.strMeasure3} ${hit.strIngredient3}</li>
+                    <li>${hit.strMeasure4} ${hit.strIngredient4}</li>
+                    <li>${hit.strMeasure5} ${hit.strIngredient5}</li>
+                    <li>${hit.strMeasure6} ${hit.strIngredient6}</li>
+                  </ul>
                   </div>
                 </p>
               </div>
@@ -70,4 +72,35 @@ search.addWidget(
   );
 
   search.start();
+
+  search.on('render', function() {
+   $("form").each(function(index, element) {
+      var objectId = $(element).find('.object-id').first().val();
+      
+      $(element).submit(function(event){
+        var emailAddress = $('#email-address' + objectId).val();
+        event.preventDefault(); 
+        postEmail(objectId, emailAddress);
+      });
+    });
+  });
+
+   $("fa.fa-glass").click(function() {
+    $(this).toggleClass("drink");
+  });
+
 });
+
+  var postEmail = function( objectId, emailAddress) {
+    data = { objectId: objectId, emailAddress: emailAddress};    
+
+    $.post({
+      url: '/email',
+      contentType: 'application/json',
+      success: function(data) {
+        console.log(data)
+      }
+    });
+  };
+
+ 
