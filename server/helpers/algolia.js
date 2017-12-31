@@ -69,7 +69,7 @@ function configureAlgoliaIndex(){
 //   algoliaIndex.search({
     
 //   })
-}
+//}
 
 function sendDataToAlgolia(algoliaObjects){
   algoliaIndex.addObjects(algoliaObjects, function(err, content) {
