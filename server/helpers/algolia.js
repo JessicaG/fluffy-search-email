@@ -64,7 +64,6 @@ function configureAlgoliaIndex(){
     ]
   });
 }
-
 function sendDataToAlgolia(algoliaObjects){
   algoliaIndex.addObjects(algoliaObjects, function(err, content) {
   })
