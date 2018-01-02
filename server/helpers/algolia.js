@@ -64,13 +64,6 @@ function configureAlgoliaIndex(){
     ]
   });
 }
-
-// function configureAlgoliaFaceting(){
-//   algoliaIndex.search({
-    
-//   })
-//}
-
 function sendDataToAlgolia(algoliaObjects){
   algoliaIndex.addObjects(algoliaObjects, function(err, content) {
   })
