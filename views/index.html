@@ -2,23 +2,9 @@
 <html>
   {% include "partials/header.html" %}
   <body class="fill-titan">
-    
     <div class="jumbotron">
       <div class="container">
-        <div class="col-md-12">
-          <div class="col-md-8"></div>
-          <div class="col-md-4" id="email-drink-form" style="display: none">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-primary">Submit</button>
-              </span>
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-          </div>
-        </div>
-        <h1 class="display-3" style="text-align: center"><img src="https://cdn.glitch.com/c107d410-eb4e-4a5f-82ba-ac4d117b63d8%2Fglasses.svg?1514316528886" style="width:150px; height:150px"></img></h1>
+        <h1 class="display-3" style="text-align: center"><img src="https://cdn.glitch.com/7030c786-e3b6-46e8-a491-27b901fbbaef%2F10-slide-cocktails-purple.png?1516874591365" style="width:275px; height:150px"></img></h1>
         <div class="row">
           <div class="col-md-12">
             <div class="m100p pos-rel">
@@ -40,7 +26,7 @@
         </div>
       </div>
     </div>
-        
+
     <div class="row">
       <div class="col-md-12">
         <div id="hits">
@@ -54,12 +40,13 @@
       </div>
     </div>
     
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
-            crossorigin="anonymous">
-    </script>
+    <!-- jQuery first, then Bootstrap JS. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
+    
     <script src="search.js"></script>
     {% include "partials/variables.html" %}
     

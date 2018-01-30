@@ -1,20 +1,29 @@
+// only do if not running on glitch
+if (!process.env.PROJECT_DOMAIN) {
+  // read environment variables (only necessary locally, not on Glitch)
+  require('dotenv').config();
+}
 const axios = require('axios')
 const sgMail = require('@sendgrid/mail');
+const algoliasearch = require('algoliasearch')
+const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY);
+const index = client.initIndex('cocktail_db');
 
 function fetchRecipe(body) {
+  console.log(body)
+  console.log(body.drinkId)
 
-  // index.getObject('myObjectID', function(err, content) {
-  //    console.log(content.objectID + ": " + content.toString());
-  // })
-  const url = `http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${body.subject}`
-  return axios.get(url,{})
-  .then(function(response){
-      console.log(response)
-      sendCocktail(response, body)
-    })
-  .catch(function(error) {
-      console.log(error)
-    })
+  index.search({query: body.drinkId}).then(res => {
+    console.log("here")
+  })
+  // return axios.get(url,{})
+  // .then(function(response){
+  //     console.log(response)
+  //     sendCocktail(response, body)
+  //   })
+  // .catch(function(error) {
+  //     console.log(error)
+  //   })
 }
 
 function sendCocktail(body, response) {

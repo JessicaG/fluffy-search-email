@@ -5,11 +5,11 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 const upload = multer()
 const cocktailApi = require('./server/helpers/cocktail_api')
-const algoliaHelper = require('./server/helpers/algolia');
 
 const dataUrl = "https://raw.githubusercontent.com/algolia/datasets/master/movies/actors.json"
 
 app.use(express.static('public'));
+app.use(bodyParser.json({ type: 'application/*+json' }))
 
 nunjucks.configure('views', {
   express: app,
@@ -22,8 +22,9 @@ app.get('/', (request, response) => {
 });
 
 app.post('/email', function(request, response){
-  // receiving json data okay?
-  response.sendStatus(200)
+  console.log(request.params)
+  console.log(request.body)
+  // cocktailApi.fetchRecipe(response.body)
 });
 
 app.post('/parse', upload.fields([]), function (req, res) {
