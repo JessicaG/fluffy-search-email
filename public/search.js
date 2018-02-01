@@ -136,7 +136,6 @@ $(document).ready(function() {
       type: "POST",
       url: '/email',
       data: data,
-      dataType: 'application/json',
       success: function(data) {
         console.log(data)
       }
