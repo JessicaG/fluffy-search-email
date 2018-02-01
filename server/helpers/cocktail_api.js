@@ -26,19 +26,18 @@ function fetchRecipe(emailAddress, drinkId) {
 function buildRecipeEmail(cocktail){
   return `
   <h1>${cocktail.strDrink}</h1>
-  <strong>Category:</strong>${cocktail.strCategory}
-  <span>👓Glassware: ${cocktail.strGlass}</span>
-  <span>Instructions: ${cocktail.strInstructions}</span>
-  <img src="${cocktail.strDrinkThumb}">
-  <h2>📕Instructions:</h2>
-  <ul>
-  <li>${cocktail.strMeasure1} ${cocktail.strIngredient1}</li>
-  <li>${cocktail.strMeasure2} ${cocktail.strIngredient2}</li>
-  <li>${cocktail.strMeasure3} ${cocktail.strIngredient3}</li>
-  <li>${cocktail.strMeasure4} ${cocktail.strIngredient4}</li>
-  <li>${cocktail.strMeasure5} ${cocktail.strIngredient5}</li>
-  <li>${cocktail.strMeasure6} ${cocktail.strIngredient6}</li>
-  </ul>
+  <strong>📕 Category: </strong>${cocktail.strCategory}
+  <p><strong>👓 Glassware: </strong>${cocktail.strGlass}</p>
+  <h2>Instructions:</h2>
+  <p>${cocktail.strInstructions}</p>
+  <img src="${cocktail.strDrinkThumb}" style="width:100px;height:100px;"" >
+  <h3><strong> 👀 Measurements: </strong></h3>
+  <p>${cocktail.strMeasure1} ${cocktail.strIngredient1}</p>
+  <p>${cocktail.strMeasure2} ${cocktail.strIngredient2}</p>
+  <p>${cocktail.strMeasure3} ${cocktail.strIngredient3}</p>
+  <p>${cocktail.strMeasure4} ${cocktail.strIngredient4}</p>
+  <p>${cocktail.strMeasure5} ${cocktail.strIngredient5}</p>
+  <p>${cocktail.strMeasure6} ${cocktail.strIngredient6}</p>
   `;
 }
 
@@ -48,7 +47,7 @@ function sendCocktail(recipe, emailAdress) {
   sgMail.setApiKey(process.env.SG_API_KEY);
   const msg = {
     to: sender,
-    from: 'Algolia Cocktail Search',
+    from: 'recipes@drink.bingo',
     subject: subject,
     html: recipe,
   };
