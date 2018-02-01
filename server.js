@@ -9,7 +9,6 @@ const cocktailApi = require('./server/helpers/cocktail_api')
 const dataUrl = "https://raw.githubusercontent.com/algolia/datasets/master/movies/actors.json"
 
 app.use(express.static('public'));
-// app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -33,17 +32,6 @@ app.post('/email', upload.any(), function (request, response) {
     response.status(500).json({ error: err });
   });
 });
-
-app.post('/parse', upload.fields([]), function (request, response) {
-  // console.log("FROM: " + request.body.from);
-  // console.log("BODY TEXT: " + request.body.text);
-  // console.log("SUBJECT: " + request.body.subject);
-  console.log(request.body)
-
-  // return cocktailApi.fetchRecipe(request.body)
-  //   .catch(error => console.log(error) || response.status(500).send(error))
-  //   .then(response => response.json(response.data))
-})
 
 function getTemplateContext(request) {
   return {
