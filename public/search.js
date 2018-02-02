@@ -79,7 +79,8 @@ $(document).ready(function() {
                       <div class="input-group">
                         <input type="text" class="form-control" id="email-address${hit.idDrink}" placeholder="Enter your email address">
                         <input type="hidden" class="idDrink" value="${hit.idDrink}">
-                        <button type="submit">SUBMIT</button>
+                        <input type="hidden" class="nameDrink" value="${hit.strDrink}">
+                        <button type="submit">Submit</button>
                       </div>
                     </form>
                   </div>
@@ -118,20 +119,20 @@ $(document).ready(function() {
 
    $("form").each(function(index, element) {
       var drinkId = $(element).find('.idDrink').val();
-      
+       
       $(element).submit(function(event){
         event.preventDefault();
         var emailAddress = $('#email-address' + drinkId).val();
-        postEmail(drinkId, emailAddress);
+        var drinkName = $(element).find('.nameDrink').val();
+        postEmail(drinkId, emailAddress, drinkName);
       });
     });
 
   });
 });
 
-  var postEmail = function(drinkId, emailAddress) {
-    var data = { drinkId: drinkId, emailAddress: emailAddress}; 
-    console.log(data)   
+  var postEmail = function(drinkId, emailAddress, drinkName) {
+    var data = { drinkId: drinkId, emailAddress: emailAddress, drinkName: drinkName}; 
     $.ajax({
       type: "POST",
       url: '/email',

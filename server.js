@@ -25,7 +25,7 @@ app.get('/', (request, response) => {
 
 app.post('/email', upload.any(), function (request, response) {
   let formData = request.body;
-  cocktailApi.fetchRecipe(formData.emailAddress, formData.drinkId).then(() => {
+  cocktailApi.fetchRecipe(formData.emailAddress, formData.drinkId, formData.drinkName).then(() => {
     response.sendStatus(200)
   }).catch((err) => {
     console.error('email send fail from server', err);
