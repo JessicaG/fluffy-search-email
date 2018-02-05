@@ -3,14 +3,26 @@ $(document).ready(function() {
 
   // create an instantsearch instance with our app id and api key
   var search = instantsearch({
-    appId: window.glitchApp.algolia.app_id,
-    apiKey: window.glitchApp.algolia.search_api_key,
-    indexName: window.glitchApp.algolia.index_name,
+    appId: Cookies.get('app_id'),
+    apiKey: Cookies.get('search_api_key'),
+    indexName: Cookies.get('index_name'),
     urlSync: true,
     searchParameters: {
       hitsPerPage: 3
     }
   });
+
+  var emailFieldValue = ""
+
+  function checkForCookie() {
+    if (Cookies.get('email_address')) {
+      return emailFieldValue = Cookies.get('email_address')
+    } else {
+      return null;
+    }
+  }
+
+  checkForCookie()
 
   // //conects the search input on your page to Algolia
   search.addWidget(
@@ -77,7 +89,7 @@ $(document).ready(function() {
                   <div class="collapse" id="collapseDrink${hit.idDrink}">
                     <form class="email-cocktail-form">
                       <div class="input-group">
-                        <input type="text" class="form-control" id="email-address${hit.idDrink}" placeholder="Enter your email address">
+                        <input type="text" class="form-control" id="email-address${hit.idDrink}" placeholder="Enter your email address" value="${emailFieldValue}">
                         <input type="hidden" class="idDrink" value="${hit.idDrink}">
                         <input type="hidden" class="nameDrink" value="${hit.strDrink}">
                         <button type="submit">Submit</button>
@@ -124,11 +136,16 @@ $(document).ready(function() {
         event.preventDefault();
         var emailAddress = $('#email-address' + drinkId).val();
         var drinkName = $(element).find('.nameDrink').val();
+
+        Cookies.set("email_address", emailAddress);
+        
         postEmail(drinkId, emailAddress, drinkName);
       });
     });
 
   });
+
+  checkForCookie()
 });
 
   var postEmail = function(drinkId, emailAddress, drinkName) {
@@ -138,7 +155,11 @@ $(document).ready(function() {
       url: '/email',
       data: data,
       success: function(data) {
-        console.log(data)
+        var form = $('div').find('#collapseDrink' + drinkId).first();
+        form.removeClass('collapse in')
+        form.addClass('collapse')
+        $('#success_message').fadeIn()
+        $('#success_message').fadeOut(3000)
       }
     });
   };

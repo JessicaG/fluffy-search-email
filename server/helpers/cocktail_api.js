@@ -25,17 +25,19 @@ function fetchRecipe(emailAddress, drinkId, drinkName) {
 
 function buildRecipeEmail(cocktail) {
   return `
-  <h2>Instructions:</h2>
-  <p>${cocktail.strInstructions}</p>
-  <p><strong>Glassware: </strong>${cocktail.strGlass}</p>
-  <h3>Measurements: </h3>
-  <p>${cocktail.strMeasure1} ${cocktail.strIngredient1}</p>
-  <p>${cocktail.strMeasure2} ${cocktail.strIngredient2}</p>
-  <p>${cocktail.strMeasure3} ${cocktail.strIngredient3}</p>
-  <p>${cocktail.strMeasure4} ${cocktail.strIngredient4}</p>
-  <p>${cocktail.strMeasure5} ${cocktail.strIngredient5}</p>
-  <p>${cocktail.strMeasure6} ${cocktail.strIngredient6}</p>
-  <img src="${cocktail.strDrinkThumb}" style="width:100px;height:100px;"">
+  <div style="text-align:center">
+    <h2>Instructions:</h2>
+    <p>${cocktail.strInstructions}</p>
+    <p><strong>Glassware: </strong>${cocktail.strGlass}</p>
+    <h3>Measurements: </h3>
+    <p>${cocktail.strMeasure1} ${cocktail.strIngredient1}</p>
+    <p>${cocktail.strMeasure2} ${cocktail.strIngredient2}</p>
+    <p>${cocktail.strMeasure3} ${cocktail.strIngredient3}</p>
+    <p>${cocktail.strMeasure4} ${cocktail.strIngredient4}</p>
+    <p>${cocktail.strMeasure5} ${cocktail.strIngredient5}</p>
+    <p>${cocktail.strMeasure6} ${cocktail.strIngredient6}</p>
+    <img src="${cocktail.strDrinkThumb}" style="width:100px;height:100px;"">
+  </div>
   `;
 }
 

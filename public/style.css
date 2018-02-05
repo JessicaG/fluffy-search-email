@@ -26,6 +26,12 @@ body {
   /*font-family: 'Pangolin', cursive;*/
 }
 
+#success_message{
+  background: #CCF5CC;
+  text-align: center;
+  display: none;
+}
+
 .drink-images {
   margin: 0 auto;
   display: block;
