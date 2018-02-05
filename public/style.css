@@ -5,8 +5,31 @@
 /* Check out how to use different components below: */
 /* https://getbootstrap.com/docs/4.0/getting-started/introduction/ */
 
-.nicejob {
-  text-decoration: line-through;
+input[type="checkbox"] {
+    display:none;
+}
+
+p {
+  font-size: 15px !important;
+}
+
+footer {
+  text-align: center;
+}
+
+li {
+  list-style: none;
+  font-size: 18px;
+  color: grey;
+}
+body {
+  /*font-family: 'Pangolin', cursive;*/
+}
+
+#success_message{
+  background: #CCF5CC;
+  text-align: center;
+  display: none;
 }
 
 .drink-images {
@@ -32,11 +55,28 @@
   color:red;
 }
 
+.fade.in {
+  opacity: 1;
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+.modal-backdrop.in {
+  opacity: 0.5;
+}
+
 #tags {
   max-width: 70%;
   margin: 0 auto 40px auto;
   display: flex;
   justify-content: center;
+}
+
+.ais-hits em {
+  background: #FFC168;
+  font-style: normal;
 }
 
 .ais-refinement-list--count {
@@ -70,49 +110,6 @@
   background: #00AEFF;
   color: #fff;
   
-}
-
-input[type="checkbox"] {
-    display:none;
-}
-
-p {
-  font-size: 15px !important;
-}
-
-footer {
-  text-align: center;
-}
-
-li {
-  list-style: none;
-  font-size: 18px;
-  color: grey;
-}
-body {
-  /*font-family: 'Pangolin', cursive;*/
-}
-
-#remix {
-  font-family: 'Press Start 2P', cursive;
-  text-align: center;
-}
-
-#welcome {
-  font-family: 'Press Start 2P', cursive;
-}
-
-.detailed-steps {
-  font-size: 20px;
-  font-style: italic;
-}
-
-.current-step {
-  color: black;
-}
-
-.completed-steps {
-  text-decoration: line-through;
 }
 
 /* copied from the instantsearch theme located at

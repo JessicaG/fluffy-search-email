@@ -1,13 +1,7 @@
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script>
   // make key server-side information available on the client
-  window.glitchApp = {
-    algolia: {
-      index_name: "{{ algolia.index_name }}",
-      app_id: "{{ algolia.app_id }}",
-      search_api_key: "{{ algolia.search_api_key }}"
-    },
-    data: {
-      algolia_env: "{{ data.algolia_env }}",
-    }
-  };
+  Cookies.set("index_name", "{{ algolia.index_name }}");
+  Cookies.set("app_id", "{{ algolia.app_id }}");
+  Cookies.set("search_api_key", "{{ algolia.search_api_key }}");
 </script>

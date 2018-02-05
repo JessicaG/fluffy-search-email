@@ -5,11 +5,13 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 const upload = multer()
 const cocktailApi = require('./server/helpers/cocktail_api')
-const algoliaHelper = require('./server/helpers/algolia');
 
 const dataUrl = "https://raw.githubusercontent.com/algolia/datasets/master/movies/actors.json"
 
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 nunjucks.configure('views', {
   express: app,
@@ -21,20 +23,15 @@ app.get('/', (request, response) => {
   response.send(nunjucks.render('index.html', getTemplateContext(request)));
 });
 
-app.post('/email', function(request, response){
-  // receiving json data okay?
-  response.sendStatus(200)
+app.post('/email', upload.any(), function (request, response) {
+  let formData = request.body;
+  cocktailApi.fetchRecipe(formData.emailAddress, formData.drinkId, formData.drinkName).then(() => {
+    response.sendStatus(200)
+  }).catch((err) => {
+    console.error('email send fail from server', err);
+    response.status(500).json({ error: err });
+  });
 });
-
-app.post('/parse', upload.fields([]), function (req, res) {
-  console.log("FROM: " + req.body.from);
-  console.log("BODY TEXT: " + req.body.text);
-  console.log("SUBJECT: " + req.body.subject);
-  
-  return cocktailApi.fetchRecipe(req.body)
-    .catch(error => console.log(error) || res.status(500).send(error))
-    .then(response => res.json(response.data))
-})
 
 function getTemplateContext(request) {
   return {
