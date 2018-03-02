@@ -39,6 +39,7 @@ body {
   border-radius: 50%;
   width: 300px;
   height: 300px;
+  cursor: pointer;
 }
 
 .drink-details {
@@ -158,3 +159,19 @@ body {
   color: #3369E7;
   text-decoration: none; 
 }
+
+.align {
+  margin: auto;
+}
+
+.align button[type="submit"] {
+  margin-top: 10px;
+}
+
+.cocktail-form {
+  z-index: 300;
+}
+.email-cocktail-form {
+  margin-top: 10px;
+}
+
