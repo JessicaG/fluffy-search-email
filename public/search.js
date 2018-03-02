@@ -82,7 +82,7 @@ $(document).ready(function() {
                 </div>
 
                 <!-- Email form -->
-                <div class="form-group cocktail-form" style="padding-top: 20px">
+                <div class="form-group cocktail-form">
                   <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}">
                     📩 Email Me
                   </button>

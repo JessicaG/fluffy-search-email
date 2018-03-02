@@ -169,7 +169,7 @@ body {
 }
 
 .cocktail-form {
-  z-index: 300;
+  padding-top: 20px;
 }
 .email-cocktail-form {
   margin-top: 10px;
