@@ -23,6 +23,32 @@ function fetchRecipe(emailAddress, drinkId, drinkName) {
   });
 }
 
+function fetchRecipeFromAlgoliaIndex(subject, senderEmail) {
+  return index.search({query: subject})
+  .then(response => {
+    return randomizeDrinkSelection(response.hits)
+    console.log(response.hits)
+  })
+  .then(response => {
+    return buildRecipeEmail(response)
+  })
+  .then(response => {
+    return sendCocktail(response, senderEmail , response.strDrink)
+  })
+  .catch((err) => {
+    console.error('email sending fail from cocktail_api', err);
+    response.status(500).json({ error: err });
+  });
+}
+
+function randomizeDrinkSelection(drinksArray) {
+  return randomRecipe(drinksArray)
+}
+function randomRecipe(drinksArray){
+  var randomNumber = Math.floor(Math.random() * (drinksArray.length));
+  return drinksArray[randomNumber]
+}
+
 function buildRecipeEmail(cocktail) {
   return `
   <div style="text-align:center">
@@ -53,4 +79,4 @@ function sendCocktail(recipe, emailAdress, drinkName) {
   sgMail.send(msg);
 }
 
-module.exports = {fetchRecipe}
+module.exports = {fetchRecipe, fetchRecipeFromAlgoliaIndex}
