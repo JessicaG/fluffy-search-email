@@ -82,13 +82,13 @@ $(document).ready(function() {
                 </div>
 
                 <!-- Email form -->
-                <div class="form-group cocktail-form">
+                <div class="form-group" style="padding-top: 20px">
                   <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}">
                     📩 Email Me
                   </button>
                   <div class="collapse" id="collapseDrink${hit.idDrink}">
                     <form class="email-cocktail-form">
-                      <div class="input-group align">
+                      <div class="input-group">
                         <input type="text" class="form-control" id="email-address${hit.idDrink}" placeholder="Enter your email address" value="${emailFieldValue}">
                         <input type="hidden" class="idDrink" value="${hit.idDrink}">
                         <input type="hidden" class="nameDrink" value="${hit.strDrink}">
@@ -156,12 +156,10 @@ $(document).ready(function() {
       data: data,
       success: function(data) {
         var form = $('div').find('#collapseDrink' + drinkId).first();
-        $('#success_message').fadeIn();
-        $('#success_message').fadeOut(3000);
-        $(form).slideUp('slow', function(){
-          form.removeClass('collapse in');
-          form.addClass('collapse');
-        });
+        form.removeClass('collapse in')
+        form.addClass('collapse')
+        $('#success_message').fadeIn()
+        $('#success_message').fadeOut(3000)
       }
     });
   };

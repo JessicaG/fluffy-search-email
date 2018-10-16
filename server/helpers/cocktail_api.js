@@ -16,10 +16,10 @@ function fetchRecipe(emailAddress, drinkId, drinkName) {
   })
   .then(response => {
     return sendCocktail(response, emailAddress, drinkName)
+    response.status(200);
   })
   .catch((err) => {
     console.error('email sending fail from cocktail_api', err);
-    response.status(500).json({ error: err });
   });
 }
 
@@ -27,17 +27,16 @@ function fetchRecipeFromAlgoliaIndex(subject, senderEmail) {
   return index.search({query: subject})
   .then(response => {
     return randomizeDrinkSelection(response.hits)
-    console.log(response.hits)
+    
   })
   .then(response => {
     return buildRecipeEmail(response)
   })
   .then(response => {
-    return sendCocktail(response, senderEmail , response.strDrink)
+    return sendCocktail(response.recipe, senderEmail , response.drinkName)
   })
   .catch((err) => {
     console.error('email sending fail from cocktail_api', err);
-    response.status(500).json({ error: err });
   });
 }
 
@@ -50,7 +49,7 @@ function randomRecipe(drinksArray){
 }
 
 function buildRecipeEmail(cocktail) {
-  return `
+  return { recipe: `
   <div style="text-align:center">
     <h2>Instructions:</h2>
     <p>${cocktail.strInstructions}</p>
@@ -64,7 +63,7 @@ function buildRecipeEmail(cocktail) {
     <p>${cocktail.strMeasure6} ${cocktail.strIngredient6}</p>
     <img src="${cocktail.strDrinkThumb}" style="width:100px;height:100px;"">
   </div>
-  `;
+  `, drinkName: cocktail.strDrink };
 }
 
 function sendCocktail(recipe, emailAdress, drinkName) {
@@ -77,6 +76,8 @@ function sendCocktail(recipe, emailAdress, drinkName) {
     html: recipe,
   };
   sgMail.send(msg);
+  console.log(msg);
+  return { data: msg };
 }
 
 module.exports = {fetchRecipe, fetchRecipeFromAlgoliaIndex}
