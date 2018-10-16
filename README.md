@@ -5,6 +5,8 @@ Welcome to the Algolia Cocktail Search
 
 **SendGrid** is a cloud-based SMTP provider that allows you to send email without having to maintain email server. 
 
+**Twilio** is a cloud powered API that allows developers to quickly and easily send SMS messages to their users, and establish a two way conversation.
+
 We are using the Algolia Instant Search wrapper for javascript, with faceting filters and search for faceted values.
 
 We are using the SendGrid Inbound Email Webparse hook, that parses attachments and contents of incoming emails.

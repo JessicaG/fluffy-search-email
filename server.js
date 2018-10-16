@@ -33,14 +33,16 @@ app.post('/email', upload.any(), function (request, response) {
   });
 });
 
-app.post('/parse', upload.fields([]), function (req, res) { 
-  console.log("FROM: " + req.body.from);  
-  console.log("BODY TEXT: " + req.body.text); 
-  console.log("SUBJECT: " + req.body.subject);  
+app.post('/parse', upload.fields([]), function (req, res) {	
+  console.log("FROM: " + req.body.from);	
+  console.log("BODY TEXT: " + req.body.text);	
+  console.log("SUBJECT: " + req.body.subject);	
   
-return cocktailApi.fetchRecipeFromAlgoliaIndex(req.body, req.body.from)
-  .catch(error => console.log(error) || res.status(500).send(error))  
-  .then(response => res.json(response.data))  
+return cocktailApi.fetchRecipeFromAlgoliaIndex(req.body.subject, req.body.from)
+  .catch(error => console.log(error) || res.status(500).send(error))	
+  .then(response => {
+  res.json(response.data)
+})	
 })
 
 function getTemplateContext(request) {
