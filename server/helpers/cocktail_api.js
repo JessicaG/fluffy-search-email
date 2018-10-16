@@ -75,8 +75,8 @@ function sendCocktail(recipe, emailAdress, drinkName) {
     subject: subject,
     html: recipe,
   };
-  sgMail.send(msg);
-  console.log(msg);
+  sgMail.send(msg)
+  .catch(err => console.error(`SendGrid error: ${err}`);
   return { data: msg };
 }
 
