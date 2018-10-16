@@ -38,9 +38,9 @@ app.post('/parse', upload.fields([]), function (req, res) {
   console.log("BODY TEXT: " + req.body.text); 
   console.log("SUBJECT: " + req.body.subject);  
   
-return cocktailApi.fetchRecipeFromAlgoliaIndex(req.body, req.body.from)
-  .catch(error => console.log(error) || res.status(500).send(error))  
-  .then(response => res.json(response.data))  
+  return cocktailApi.fetchRecipeFromAlgoliaIndex(req.body, req.body.from)
+    .catch(error => console.log(error) || res.status(500).send(error))  
+    .then(response => res.json(response.data))  
 })
 
 function getTemplateContext(request) {

@@ -6,8 +6,9 @@ if (!process.env.PROJECT_DOMAIN) {
 const axios = require('axios')
 const sgMail = require('@sendgrid/mail');
 const algoliasearch = require('algoliasearch')
-const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY);
-const index = client.initIndex('cocktail_db');
+const algoliaClient = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY);
+const index = algoliaClient.initIndex('cocktail_db');
+const twilioClient = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_ID);
 
 function fetchRecipe(emailAddress, drinkId, drinkName) {
   return index.search({query: drinkId})
@@ -15,7 +16,7 @@ function fetchRecipe(emailAddress, drinkId, drinkName) {
     return buildRecipeEmail(response.hits[0])
   })
   .then(response => {
-    return sendCocktail(response, emailAddress, drinkName)
+    return sendCocktailEmail(response, emailAddress, drinkName)
   })
   .catch((err) => {
     console.error('email sending fail from cocktail_api', err);
@@ -27,13 +28,12 @@ function fetchRecipeFromAlgoliaIndex(subject, senderEmail) {
   return index.search({query: subject})
   .then(response => {
     return randomizeDrinkSelection(response.hits)
-    console.log(response.hits)
   })
   .then(response => {
     return buildRecipeEmail(response)
   })
   .then(response => {
-    return sendCocktail(response, senderEmail , response.strDrink)
+    return sendCocktailEmail(response, senderEmail , response.strDrink)
   })
   .catch((err) => {
     console.error('email sending fail from cocktail_api', err);
@@ -66,8 +66,8 @@ function buildRecipeEmail(cocktail) {
   </div>
   `;
 }
-
-function sendCocktail(recipe, emailAdress, drinkName) {
+/* SENDGRID INTEGRATION */
+function sendCocktailEmail(recipe, emailAdress, drinkName) {
   const subject = `🎉 Your cocktail search recipe for ${drinkName}`;
   sgMail.setApiKey(process.env.SG_API_KEY);
   const msg = {
@@ -77,6 +77,17 @@ function sendCocktail(recipe, emailAdress, drinkName) {
     html: recipe,
   };
   sgMail.send(msg);
+}
+
+/* TWILIO INTEGRATION */
+function sendCocktailText() {
+  const msg = {
+    body: `Here is your cocktail recipe: `
+  }
+  twilioClient.messages
+    .create({
+      body
+    })
 }
 
 module.exports = {fetchRecipe, fetchRecipeFromAlgoliaIndex}
