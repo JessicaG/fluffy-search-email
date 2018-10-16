@@ -41,7 +41,6 @@ app.post('/parse', upload.fields([]), function (req, res) {
 return cocktailApi.fetchRecipeFromAlgoliaIndex(req.body.subject, req.body.from)
   .catch(error => console.log(error) || res.status(500).send(error))	
   .then(response => {
-  console.log(response.data)
   res.json(response.data)
 })	
 })
