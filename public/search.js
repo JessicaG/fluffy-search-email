@@ -94,7 +94,7 @@ $(document).ready(function() {
                   </button>
                   <div class="collapse" id="collapseDrink${hit.idDrink}-text">
                       <div class="input-group">
-                        <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="phone-number${hit.idDrink}" placeholder="+12024561111" aria-label="Enter your phone number" value="${phoneNumberFieldValue}">
+                        <input type="text" class="form-control" id="phone-number${hit.idDrink}" placeholder="+12024561111" aria-label="Enter your phone number" value="${phoneNumberFieldValue}">
                         <button class="btn btn-outline-secondary" type="button" onclick="postText(${hit.idDrink}, ${'\'' + `phone-number${hit.idDrink}` + '\''}, ${'\'' + hit.strDrink + '\''})">Submit</button>
                       </div> 
                   </div>
@@ -179,8 +179,8 @@ var postEmail = function(drinkId, emailAddress, drinkName) {
   });
 };
 
-var postText = function(drinkId, phoneNumber, drinkName) {
-  var data = { drinkId: drinkId, to: document.getElementById(phoneNumber).value, drinkName: drinkName }; 
+var postText = function(drinkId, phoneId, drinkName) {
+  var data = { drinkId: drinkId, to: document.getElementById(phoneId).value, drinkName: drinkName }; 
 
   $.ajax({
     type: "POST",

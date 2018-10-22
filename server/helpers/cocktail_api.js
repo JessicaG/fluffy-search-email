@@ -77,22 +77,29 @@ function sendCocktailEmail(recipe, emailAdress, drinkName) {
 }
 
 function buildRecipeEmail(cocktail) {
-  return { recipe: `
+  let recipe = `
   <div style="text-align:center">
     <h2>Instructions:</h2>
     <p>${cocktail.strInstructions}</p>
     <p><strong>Glassware: </strong>${cocktail.strGlass}</p>
     <h3>Measurements: </h3>
-    <p>${cocktail.strMeasure1} ${cocktail.strIngredient1}</p>
-    <p>${cocktail.strMeasure2} ${cocktail.strIngredient2}</p>
-    <p>${cocktail.strMeasure3} ${cocktail.strIngredient3}</p>
-    <p>${cocktail.strMeasure4} ${cocktail.strIngredient4}</p>
-    <p>${cocktail.strMeasure5} ${cocktail.strIngredient5}</p>
-    <p>${cocktail.strMeasure6} ${cocktail.strIngredient6}</p>
-    <img src="${cocktail.strDrinkThumb}" style="width:100px;height:100px;"">
-  </div>
-  `, drinkName: cocktail.strDrink };
+  `
+
+  let measurementCount = 1 // at least 1 measurement included
+  while (cocktail.hasOwnProperty(`strMeasure${measurementCount}`)) {
+    measurementCount += 1
+  }
+  let measurements = ``
+  for (let i = 1; i < measurementCount; i++) {
+    if (cocktail['strMeasure' + i] !== '' && cocktail['strIngredient' + i] !== '')
+    measurements += `<p>${cocktail['strMeasure' + i]}: ${cocktail['strIngredient' + i]}</p>`
+  }
+
+  recipe += measurements += `<img src="${cocktail.strDrinkThumb}" style="width:100px;height:100px;""></div>`
+  return { recipe: recipe, drinkName: cocktail.strDrink };
 }
+
+/* TWILIO INTEGRATION */
 function buildTextRecipe(cocktail) {
   let measurementCount = 1 // at least 1 measurement included
   while (cocktail.hasOwnProperty(`strMeasure${measurementCount}`)) {
@@ -109,14 +116,13 @@ function buildTextRecipe(cocktail) {
   }
 }
 
-/* TWILIO INTEGRATION */
 function sendText(to, from, body) {
   const msg = {
     body: body.recipe,
     from: from,
     to: to
   }
-  twilioClient.messages.create(msg).then(msg => console.log(msg)).catch(err => console.error(err)).done()
+  twilioClient.messages.create(msg).then(msg => console.log(msg.sid)).catch(err => console.error(err)).done()
 }
 
 module.exports = { fetchRecipe, fetchRecipeFromAlgoliaIndex }
