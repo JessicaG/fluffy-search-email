@@ -6,8 +6,6 @@ const multer = require('multer')
 const upload = multer()
 const cocktailApi = require('./server/helpers/cocktail_api')
 
-const dataUrl = "https://raw.githubusercontent.com/algolia/datasets/master/movies/actors.json"
-
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
   extended: true
@@ -25,7 +23,7 @@ app.get('/', (request, response) => {
 
 app.post('/email', upload.any(), function (request, response) {
   let formData = request.body;
-  cocktailApi.fetchRecipe(formData.emailAddress, formData.drinkId, formData.drinkName).then(() => {
+  cocktailApi.fetchRecipe(formData.drinkId, formData.emailAddress, null).then(() => {
     response.sendStatus(200)
   }).catch((err) => {
     console.error('email send fail from server', err);
@@ -33,14 +31,28 @@ app.post('/email', upload.any(), function (request, response) {
   });
 });
 
-app.post('/parse', upload.fields([]), function (req, res) { 
-  console.log("FROM: " + req.body.from);  
-  console.log("BODY TEXT: " + req.body.text); 
-  console.log("SUBJECT: " + req.body.subject);  
+app.post('/text', upload.any(), function (request, response) {
+  let formData = request.body;
+  cocktailApi.fetchRecipe(formData.drinkId, null, String(formData.to))
+  .then(() => {
+    response.sendStatus(200);
+  })
+  .catch((err) => {
+    console.error(err)
+    response.sendStatus(500);
+  })
+})
+
+app.post('/parse', upload.fields([]), function (req, res) {	
+  console.log("FROM: " + req.body.from);	
+  console.log("BODY TEXT: " + req.body.text);	
+  console.log("SUBJECT: " + req.body.subject);	
   
-  return cocktailApi.fetchRecipeFromAlgoliaIndex(req.body, req.body.from)
-    .catch(error => console.log(error) || res.status(500).send(error))  
-    .then(response => res.json(response.data))  
+return cocktailApi.fetchRecipeFromAlgoliaIndex(req.body.subject, req.body.from)
+  .catch(error => console.log(error) || res.status(500).send(error))	
+  .then(response => {
+  res.json(response.data)
+})	
 })
 
 function getTemplateContext(request) {

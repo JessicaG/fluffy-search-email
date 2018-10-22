@@ -13,12 +13,15 @@ $(document).ready(function() {
   });
 
   var emailFieldValue = ""
+  var phoneNumberFieldValue = ""
 
   function checkForCookie() {
     if (Cookies.get('email_address')) {
-      return emailFieldValue = Cookies.get('email_address')
-    } else {
-      return null;
+      emailFieldValue = Cookies.get('email_address')
+    } 
+
+    if (Cookies.get('phone_number')) {
+      phoneNumberFieldValue = Cookies.get('phone_number')
     }
   }
 
@@ -41,7 +44,7 @@ $(document).ready(function() {
         item: function(hit) {
           try {
             return `
-              <div class="col-md-4" style="text-align: center;">
+              <div class="col-md-3" style="text-align: center;height:600px;">
                 <h2 class="hit-text">
                 ${hit._highlightResult.strDrink.value}
                 </h2>
@@ -82,17 +85,27 @@ $(document).ready(function() {
                 </div>
 
                 <!-- Email form -->
-                <div class="form-group cocktail-form">
-                  <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}">
+                <div style="padding-top: 20px">
+                  <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}-email" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}-email">
                     📩 Email Me
                   </button>
-                  <div class="collapse" id="collapseDrink${hit.idDrink}">
+                  <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseDrink${hit.idDrink}-text" aria-expanded="false" aria-controls="collapseDrink${hit.idDrink}-text">
+                    📱 Text Me
+                  </button>
+                  <div class="collapse" id="collapseDrink${hit.idDrink}-text">
+                      <div class="input-group">
+                        <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="phone-number${hit.idDrink}" placeholder="+12024561111" aria-label="Enter your phone number" value="${phoneNumberFieldValue}">
+                        <button class="btn btn-outline-secondary" type="button" onclick="postText(${hit.idDrink}, ${'\'' + `phone-number${hit.idDrink}` + '\''}, ${'\'' + hit.strDrink + '\''})">Submit</button>
+                      </div> 
+                  </div>
+
+                  <div class="collapse" id="collapseDrink${hit.idDrink}-email" style="width:300px;height:300px;">
                     <form class="email-cocktail-form">
-                      <div class="input-group align">
+                      <div class="input-group">
                         <input type="text" class="form-control" id="email-address${hit.idDrink}" placeholder="Enter your email address" value="${emailFieldValue}">
                         <input type="hidden" class="idDrink" value="${hit.idDrink}">
                         <input type="hidden" class="nameDrink" value="${hit.strDrink}">
-                        <button type="submit">Submit</button>
+                        <button class="btn btn-outline-secondary" type="button" onclick="postEmail(${hit.idDrink}, ${'\'' +  emailFieldValue + '\''}, ${'\'' + hit.strDrink + '\''})">Submit</button>
                       </div>
                     </form>
                   </div>
@@ -135,11 +148,10 @@ $(document).ready(function() {
       $(element).submit(function(event){
         event.preventDefault();
         var emailAddress = $('#email-address' + drinkId).val();
-        var drinkName = $(element).find('.nameDrink').val();
+        var phoneNumber = $('#phone-number' + drinkId).val();
 
         Cookies.set("email_address", emailAddress);
-        
-        postEmail(drinkId, emailAddress, drinkName);
+        Cookies.set("phone_number", phoneNumber);
       });
     });
 
@@ -148,21 +160,40 @@ $(document).ready(function() {
   checkForCookie()
 });
 
-  var postEmail = function(drinkId, emailAddress, drinkName) {
-    var data = { drinkId: drinkId, emailAddress: emailAddress, drinkName: drinkName}; 
-    $.ajax({
-      type: "POST",
-      url: '/email',
-      data: data,
-      success: function(data) {
-        var form = $('div').find('#collapseDrink' + drinkId).first();
-        $('#success_message').fadeIn();
-        $('#success_message').fadeOut(3000);
-        $(form).slideUp('slow', function(){
-          form.removeClass('collapse in');
-          form.addClass('collapse');
-        });
-      }
-    });
-  };
+
+
+var postEmail = function(drinkId, emailAddress, drinkName) {
+  var data = { drinkId: drinkId, emailAddress: emailAddress, drinkName: drinkName }; 
+  console.log(JSON.stringify(data))
+  $.ajax({
+    type: "POST",
+    url: '/email',
+    data: data,
+    success: function(data) {
+      var form = $('div').find('#collapseDrink' + drinkId + '-email').first();
+      form.removeClass('collapse in')
+      form.addClass('collapse')
+      $('#success_message').fadeIn()
+      $('#success_message').fadeOut(3000)
+    }
+  });
+};
+
+var postText = function(drinkId, phoneNumber, drinkName) {
+  var data = { drinkId: drinkId, to: document.getElementById(phoneNumber).value, drinkName: drinkName }; 
+
+  $.ajax({
+    type: "POST",
+    url: '/text',
+    data: data,
+    success: function(data) {
+      var form = $('div').find('#collapseDrink' + drinkId + '-text').first();
+      form.removeClass('collapse in')
+      form.addClass('collapse')
+      $('#success_message').fadeIn()
+      $('#success_message').fadeOut(3000)
+    }
+  });
+}
+
  
